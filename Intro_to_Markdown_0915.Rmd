@@ -1,5 +1,5 @@
 ---
-title: "Lecture 9/15: Intro to R Markdown"
+title: "Intro to R Markdown / GitHub Lecture"
 author: "Lauren Littig"
 output: 
   html_document:
@@ -112,6 +112,8 @@ After the previous code chunk, write a bullet list given the mean, median, and s
 * The mean is `r mean(pull(la_df, num_var))`
 * The median is `r median(pull(la_df, num_var))`
 * The SD is `r sd(pull(la_df, num_var))`
+
+
 
 
 
