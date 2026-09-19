@@ -1,0 +1,117 @@
+---
+title: "Lecture 9/15: Intro to R Markdown"
+author: "Lauren Littig"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+I'm an R Markdown document! 
+
+# Section 0: libraries and notes
+
+* echo = F hides code chunks
+* message = F hides addnl messages/suggestions
+* eval = F makes code chunk not run
+* TOC gives table of contents
+
+```{r load_libraries}
+library(tidyverse)
+```
+
+# Section 1
+
+Here's a **code chunk** that samples from 
+a _normal distribution_:
+
+```{r}
+samp = rnorm(100) # this samples from a normal distribution
+length(samp)
+```
+
+# Section 2
+
+I can take the mean of the sample, too!
+The mean is `r mean(samp)`.
+
+# Section 3: a tibble
+
+This plot shows the distribution of the absolute value of $X$
+
+```{r echo = F, message = F}
+set.seed(1)
+
+plot_df = tibble(
+  x = rnorm(1000, sd = .5),
+  y = 1 + 2 * x + rnorm(1000)
+)
+
+ggplot(plot_df, aes(x = x)) + geom_histogram()
+
+head(plot_df)
+```
+# Section 5: Learning Assessment 2
+
+Write a named code chunk that creates a dataframe comprised of: a numeric variable containing a random sample of size 500 from a normal variable with mean 1; a logical vector indicating whether each sampled value is greater than zero; and a numeric vector containing the absolute value of each element. Then, produce a histogram of the absolute value variable just created. Add an inline summary giving the median value rounded to two decimal places. What happens if you set eval = FALSE to the code chunk? What about echo = FALSE?
+
+
+```{r}
+la_df = tibble(
+  num_var = rnorm(n = 500, mean = 1),
+  log_var = num_var > 0,
+  abs_var = abs(num_var))
+
+ggplot(la_df, aes(x = abs_var)) + geom_histogram()
+```
+The median is `r round(median(la_df$abs_var), 2)`
+
+The median is `r round(median(pull(la_df, abs_var)), 2)`
+
+Second way is preferable for reasons I dont get. Something about changing the dataset. 
+
+# Section 6: Formatting
+
+Text formatting
+_____________________
+
+*italic* or _italic_
+**bold** or __bold__
+`num_var`
+superscript^2 and subscript~2~
+
+Headings
+_____________________
+
+# 1st Level Header
+
+## 2nd Level Header
+
+### 3rd Level Header
+
+Lists
+---------------------
+* Bulleted 
+* Item 1a
+
+1. Numbered list item 1
+1. Item 2. Apparantly this wil be #2 when knitting (shows 1 in RStudio)
+
+
+Tables 
+------------------------------------------------------------
+
+First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell
+
+# Section 7: Learning Assessment 3
+After the previous code chunk, write a bullet list given the mean, median, and standard deviation of the original random sample.
+
+* The mean is `r mean(pull(la_df, num_var))`
+* The median is `r median(pull(la_df, num_var))`
+* The SD is `r sd(pull(la_df, num_var))`
+
+
+
